@@ -1,4 +1,4 @@
-package com.rlibanez.mrbeam
+package com.rlibanez.mrbeam.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

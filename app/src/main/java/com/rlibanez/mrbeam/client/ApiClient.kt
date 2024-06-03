@@ -8,8 +8,8 @@ object ApiClient {
 
     private const val BASE_URL = "https://metalcompendium.duckdns.org/api/"
 
-    fun sectionClient(): SectionService {
-        return Retrofit.Builder()
+    val sectionClient: SectionService by lazy {
+        Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
