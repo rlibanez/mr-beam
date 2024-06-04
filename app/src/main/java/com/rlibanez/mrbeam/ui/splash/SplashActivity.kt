@@ -49,7 +49,7 @@ fun SplashActivity(navController: NavHostController) {
     }
 
     LaunchedEffect(Unit) {
-        delay(10000)
+        delay(2000)
         navController.navigate("principal") {
             popUpTo("splash") { inclusive = true }
         }
