@@ -40,24 +40,16 @@ fun SplashActivity(navController: NavHostController) {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.splash),
-                contentDescription = "Splash Image",
+                contentDescription = "Mr Beam",
                 modifier = Modifier
-                    .size(300.dp)
+                    .size(288.dp)
                     //.clip(CircleShape)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Mr Beam",
-                //style = MaterialTheme.typography.bodyLarge,
-                //color = Color.White,
-                fontSize = 60.sp,
-                textAlign = TextAlign.Center
             )
         }
     }
 
     LaunchedEffect(Unit) {
-        delay(4000)
+        delay(10000)
         navController.navigate("principal") {
             popUpTo("splash") { inclusive = true }
         }
