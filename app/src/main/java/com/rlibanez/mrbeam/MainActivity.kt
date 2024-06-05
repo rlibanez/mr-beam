@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.rlibanez.mrbeam.ui.beam.BeamActivity
 import com.rlibanez.mrbeam.ui.principal.PrincipalActivity
 import com.rlibanez.mrbeam.ui.sections.SectionsActivity
+import com.rlibanez.mrbeam.ui.settings.SettingsActivity
 import com.rlibanez.mrbeam.ui.splash.SplashActivity
 import com.rlibanez.mrbeam.ui.theme.MrBeamTheme
 
@@ -25,6 +26,7 @@ class MainActivity : ComponentActivity() {
                     composable("principal") { PrincipalActivity(navController) }
                     composable("beam") { BeamActivity(navController) }
                     composable("sections") { SectionsActivity(navController) }
+                    composable("settings") { SettingsActivity(navController) }
                 }
             }
         }

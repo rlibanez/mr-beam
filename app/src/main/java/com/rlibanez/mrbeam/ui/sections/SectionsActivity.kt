@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -94,10 +95,11 @@ fun SectionItemTable(section: Section) {
         Column(modifier = Modifier.padding(16.dp)) {
             section.name?.let {
                 Text(
-                    text = "Section: $it",
+                    text = "Sección: $it",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF7d3c98),
+                    //color = Color(0xFF8e44ad),
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
             }
