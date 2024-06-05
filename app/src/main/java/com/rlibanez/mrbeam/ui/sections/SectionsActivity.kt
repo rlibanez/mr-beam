@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -96,6 +97,7 @@ fun SectionItemTable(section: Section) {
                     text = "Section: $it",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
+                    color = Color(0xFF7d3c98),
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
             }
@@ -125,11 +127,10 @@ fun DataTable(section: Section) {
         "pmax" to section.pmax,
         "Al" to section.al,
         "Ag" to section.ag,
-
         "Iy" to section.iy,
         "Wely" to section.wely,
         "Wply" to section.wply,
-        "Iy" to section.iyc,
+        "iy" to section.iyc,
         "Avz" to section.avz,
         "Iz" to section.iz,
         "Welz" to section.welz,
