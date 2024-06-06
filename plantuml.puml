@@ -1,0 +1,105 @@
+@startuml
+
+' Definir la clase Section
+class Section {
+    -name: String
+    -g: Double
+    -h: Double
+    -b: Double
+    -tw: Double
+    -tf: Double
+    -r1: Double
+    -r2: Double?
+    -a: Double
+    -hi: Double?
+    -d: Double
+    -dmax: String
+    -emin: Int?
+    -emax: Int?
+    -pmin: Double?
+    -pmax: Double?
+    -al: Double
+    -ag: Double
+    -iy: Double
+    -wely: Double
+    -wply: Double
+    -iyc: Double
+    -avz: Double
+    -iz: Double
+    -welz: Double
+    -wplz: Double
+    -izc: Double
+    -ss: Double
+    -it: Double
+    -iw: Double
+    -ys: Double?
+    -ym: Double?
+    -yS235: Boolean
+    -yS355: Boolean
+    -yS460: Boolean?
+    -xS235: Boolean
+    -xS355: Boolean
+    -xS460: Boolean?
+    -en1002522004: Boolean
+    -en1002542004: Boolean
+    -en102252001: Boolean
+}
+
+' Definir la interfaz SectionService
+interface SectionService {
+    +getSectionsByContainingName(contain: String): Response<List<Section>>
+}
+
+' Definir el objeto ApiClient
+object ApiClient {
+    -BASE_URL: String
+    +sectionClient: SectionService
+}
+
+' Relación entre ApiClient y SectionService
+ApiClient -> SectionService : sectionClient
+
+' Relación entre SectionService y Section
+SectionService --> Section : List<Section>
+
+' Definir la clase MainActivity
+class MainActivity {
+    +onCreate(savedInstanceState: Bundle?)
+}
+
+' Definir las clases adicionales para las actividades
+class SplashActivity
+class PrincipalActivity
+class BeamActivity
+class SectionsActivity {
+    +SectionsActivity(navController: NavHostController, viewModel: SectionViewModel = viewModel())
+}
+class SettingsActivity
+
+' Relación entre MainActivity y las actividades
+MainActivity -> SplashActivity
+MainActivity -> PrincipalActivity
+MainActivity -> BeamActivity
+MainActivity -> SectionsActivity
+MainActivity -> SettingsActivity
+
+' Relación entre SectionsActivity y Section
+SectionsActivity --> Section
+
+' Relación entre SectionsActivity y SectionViewModel
+SectionsActivity --> SectionViewModel
+
+' Definir la clase SectionViewModel
+class SectionViewModel {
+    -_sections: MutableStateFlow<List<Section>>
+    +sections: StateFlow<List<Section>>
+    +fetchSections(contain: String): void
+}
+
+' Relación entre SectionViewModel y Section
+SectionViewModel --> Section
+
+' Relación entre SectionViewModel y ApiClient
+SectionViewModel -> ApiClient : uses
+
+@enduml
