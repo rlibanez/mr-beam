@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,16 +32,22 @@ fun PrincipalActivity(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        Text(
+            text = "Mr Beam",
+            style = TextStyle(fontSize = 80.sp),
+            color = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.height(64.dp))
         Button(modifier = Modifier.fillMaxWidth(),
             onClick = { navController.navigate("beam") }) {
-            Text(text = "Viga", fontSize = 30.sp)
+            Text(text = "Vigas", fontSize = 30.sp)
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         Button(modifier = Modifier.fillMaxWidth(),
             onClick = { navController.navigate("sections") }) {
-            Text(text = "Sección", fontSize = 30.sp)
+            Text(text = "Secciones", fontSize = 30.sp)
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         Button(modifier = Modifier.fillMaxWidth(),
             onClick = { navController.navigate("settings") }) {
             Text(text = "Ajustes", fontSize = 30.sp)
