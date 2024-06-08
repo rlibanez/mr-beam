@@ -56,8 +56,8 @@ fun SectionsActivity(navController: NavHostController, viewModel: SectionViewMod
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(10.dp)
-            .padding(WindowInsets.statusBars.asPaddingValues())) {
-
+            .padding(WindowInsets.statusBars.asPaddingValues()))
+        {
             TextField(
                 value = searchText,
                 onValueChange = { query ->

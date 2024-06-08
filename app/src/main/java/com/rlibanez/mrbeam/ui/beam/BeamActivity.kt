@@ -29,6 +29,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -74,6 +75,21 @@ fun BeamActivity(navController: NavHostController) {
                 Box(modifier = Modifier.offset(x = (-2).dp)) {
                     SimpleDropdownMenuExample("derecha")
                 }
+            }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Button(
+                onClick = {
+                    val result = "error"
+                    navController.navigate("beamResult/$result")
+                },
+                modifier = Modifier.padding(48.dp)
+            ) {
+                Text("Calcular")
             }
         }
     }
