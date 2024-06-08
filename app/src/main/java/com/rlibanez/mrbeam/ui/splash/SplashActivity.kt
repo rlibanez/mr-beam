@@ -24,9 +24,22 @@ import kotlinx.coroutines.delay
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SplashActivity(navController: NavHostController) {
+    SplashScreen()
+
+    LaunchedEffect(Unit) {
+        delay(2000)
+        navController.navigate("principal") {
+            popUpTo("splash") { inclusive = true }
+        }
+    }
+}
+
+@Composable
+fun SplashScreen() {
     Surface(modifier = Modifier
         .fillMaxSize(),
         color = Color(0xFFF3F1E5)
@@ -43,15 +56,14 @@ fun SplashActivity(navController: NavHostController) {
                 contentDescription = "Mr Beam",
                 modifier = Modifier
                     .size(288.dp)
-                    //.clip(CircleShape)
+                //.clip(CircleShape)
             )
         }
     }
+}
 
-    LaunchedEffect(Unit) {
-        delay(2000)
-        navController.navigate("principal") {
-            popUpTo("splash") { inclusive = true }
-        }
-    }
+@Preview(showSystemUi = true)
+@Composable
+fun SplashActivityPreview() {
+    SplashScreen()
 }
