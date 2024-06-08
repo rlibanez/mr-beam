@@ -10,11 +10,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -42,8 +43,13 @@ import androidx.navigation.compose.rememberNavController
 import com.rlibanez.mrbeam.R
 import com.rlibanez.mrbeam.ui.theme.MrBeamTheme
 
+
 @Composable
 fun BeamActivity(navController: NavHostController) {
+
+    //var config = ""
+    var config by remember { mutableStateOf("") }
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -51,32 +57,40 @@ fun BeamActivity(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp)
+                .padding(horizontal = 6.dp, vertical = 16.dp)
                 .padding(WindowInsets.statusBars.asPaddingValues())
-            //horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Configuración de apoyos",
+                text = "Esquema de carga y sustentación",
                 style = TextStyle(fontSize = 20.sp),
                 color = MaterialTheme.colorScheme.primary
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(64.dp))
             Row(
-                //verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Box() {
+                    config = supportDropdownMenu("cargas")
+                }
+            }
+
+            Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxSize()
-                    //.padding(4.dp)
-                    //.padding(WindowInsets.statusBars.asPaddingValues())
             ) {
-                Box(modifier = Modifier.offset(x = 2.dp)) {
-                    SimpleDropdownMenuExample("izquierda")
+                Box(modifier = Modifier
+                    .offset(x = 10.dp)) {
+                    config += supportDropdownMenu("izquierda")
                 }
-                Box(modifier = Modifier.offset(x = (-2).dp)) {
-                    SimpleDropdownMenuExample("derecha")
+                Box(modifier = Modifier.offset(x = (-10).dp)) {
+                    config += supportDropdownMenu("derecha")
                 }
             }
         }
+
         Box(
             modifier = Modifier
                 .fillMaxSize(),
@@ -84,10 +98,9 @@ fun BeamActivity(navController: NavHostController) {
         ) {
             Button(
                 onClick = {
-                    val result = "error"
-                    navController.navigate("beamResult/$result")
+                    navController.navigate("beamResult/$config")
                 },
-                modifier = Modifier.padding(48.dp)
+                modifier = Modifier.padding(24.dp)
             ) {
                 Text("Calcular")
             }
@@ -96,28 +109,47 @@ fun BeamActivity(navController: NavHostController) {
 }
 
 @Composable
-fun SimpleDropdownMenuExample(lado: String) {
+fun supportDropdownMenu(lado: String): String {
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionIndex by remember { mutableIntStateOf(0) }
-    val options = listOf("Cero", "Uno", "Dos", "Tres")
+    //val options = listOf("Cero", "Uno", "Dos", "Tres")
+    var size by remember { mutableStateOf(190.dp) }
+    var paddingValues = PaddingValues(start = 10.dp, top = 0.dp, end = 0.dp, bottom = 10.dp)
+
     var images = listOf(
-        painterResource(id = R.drawable.support0i),
-        painterResource(id = R.drawable.support1i),
-        painterResource(id = R.drawable.support2i),
-        painterResource(id = R.drawable.support3i))
-    if(lado == "derecha") {
-        images = listOf(
-            painterResource(id = R.drawable.support0d),
-            painterResource(id = R.drawable.support1d),
-            painterResource(id = R.drawable.support2d),
-            painterResource(id = R.drawable.support3d))
+    painterResource(id = R.drawable.support0i),
+    painterResource(id = R.drawable.support1i),
+    painterResource(id = R.drawable.support2i),
+    painterResource(id = R.drawable.support3i)
+    )
+
+    when(lado) {
+        "derecha" -> {
+            images = listOf(
+                painterResource(id = R.drawable.support0d),
+                painterResource(id = R.drawable.support1d),
+                painterResource(id = R.drawable.support2d),
+                painterResource(id = R.drawable.support3d)
+            )
+            paddingValues = PaddingValues(start = 0.dp, top = 0.dp, end = 10.dp, bottom = 10.dp)
+        }
+        "cargas" -> {
+            images = listOf(
+                painterResource(id = R.drawable.loadcontinuous),
+                painterResource(id = R.drawable.support1i),
+                painterResource(id = R.drawable.support2d),
+                painterResource(id = R.drawable.support3i)
+            )
+            size = 350.dp
+            paddingValues = PaddingValues(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 5.dp)
+        }
     }
 
     Box {
         Button(
             onClick = { expanded = true },
             colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent), // Configuración del color de fondo transparente
-            contentPadding = PaddingValues(2.dp), // Eliminar el relleno del contenido del botón
+            contentPadding = PaddingValues(0.dp), // Eliminar el relleno del contenido del botón
             elevation = null, // Desactivar la elevación del botón
             modifier = Modifier.wrapContentSize() // Hacer que el tamaño del botón sea el tamaño del contenido
 
@@ -127,15 +159,15 @@ fun SimpleDropdownMenuExample(lado: String) {
                 painter = images[selectedOptionIndex],
                 contentDescription = null,
                 modifier = Modifier
-                    .size(175.dp)
-                    .padding(0.dp)
+                    .width(size)
+                    .padding(paddingValues)
             )
         }
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            options.forEachIndexed { index, _ ->
+            images.forEachIndexed { index, _ ->
                 DropdownMenuItem(
                     text = {
                         Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
@@ -143,8 +175,8 @@ fun SimpleDropdownMenuExample(lado: String) {
                                 painter = images[index],
                                 contentDescription = null,
                                 modifier = Modifier
-                                    .size(150.dp)
-                                    //.padding(end = 0.dp)
+                                    .width(size)
+                                    .padding(horizontal = 10.dp, vertical = 10.dp)
                             )
                         }
                     },
@@ -156,7 +188,10 @@ fun SimpleDropdownMenuExample(lado: String) {
             }
         }
     }
+    return selectedOptionIndex.toString()
 }
+
+
 
 @Preview(showBackground = true)
 @Composable

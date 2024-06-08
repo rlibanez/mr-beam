@@ -31,7 +31,7 @@ fun SplashActivity(navController: NavHostController) {
     SplashScreen()
 
     LaunchedEffect(Unit) {
-        delay(2000)
+        delay(500)
         navController.navigate("principal") {
             popUpTo("splash") { inclusive = true }
         }
