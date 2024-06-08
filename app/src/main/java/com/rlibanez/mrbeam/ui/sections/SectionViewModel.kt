@@ -16,7 +16,9 @@ class SectionViewModel : ViewModel() {
     fun fetchSections(contain: String) {
         viewModelScope.launch {
             val response = ApiClient.sectionClient.getSectionsByContainingName(contain)
-            if (response.isSuccessful) {
+            if(contain.isEmpty()) {
+                _sections.value = emptyList()
+            } else if (response.isSuccessful) {
                 response.body()?.let {
                     _sections.value = it
                 }
