@@ -45,6 +45,11 @@ class Section {
     -en102252001: Boolean
 }
 
+class Units {
+    getUnit(name: String): String
+    unit: Map<String, String>
+}
+
 ' Definir la interfaz SectionService
 interface SectionService {
     +getSectionsByContainingName(contain: String): Response<List<Section>>
@@ -60,7 +65,7 @@ object ApiClient {
 ApiClient -> SectionService : sectionClient
 
 ' Relación entre SectionService y Section
-SectionService --> Section : List<Section>
+' SectionService --> Section : List<Section>
 
 ' Definir la clase MainActivity
 class MainActivity {
@@ -84,7 +89,7 @@ MainActivity -> SectionsActivity
 MainActivity -> SettingsActivity
 
 ' Relación entre SectionsActivity y Section
-SectionsActivity --> Section
+' SectionsActivity --> Section
 
 ' Relación entre SectionsActivity y SectionViewModel
 SectionsActivity --> SectionViewModel
@@ -97,7 +102,7 @@ class SectionViewModel {
 }
 
 ' Relación entre SectionViewModel y Section
-SectionViewModel --> Section
+' SectionViewModel --> Section
 
 ' Relación entre SectionViewModel y ApiClient
 SectionViewModel -> ApiClient : uses

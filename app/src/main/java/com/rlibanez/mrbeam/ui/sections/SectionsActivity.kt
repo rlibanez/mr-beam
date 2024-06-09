@@ -52,7 +52,9 @@ fun SectionsActivity(navController: NavHostController, viewModel: SectionViewMod
     LaunchedEffect(focusRequester) { focusRequester.requestFocus() }
 
     Surface(modifier = Modifier
-        .fillMaxSize()) {
+        .fillMaxSize()
+    )
+    {
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(10.dp)

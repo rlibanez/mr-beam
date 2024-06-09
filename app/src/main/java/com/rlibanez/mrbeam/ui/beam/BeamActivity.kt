@@ -50,9 +50,14 @@ fun BeamActivity(navController: NavHostController) {
     //var config = ""
     var config by remember { mutableStateOf("") }
 
+    var left = ""
+    var right = ""
+    var load = ""
+
     Surface(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        //color = MaterialTheme.colorScheme.primaryContainer
     ) {
         Column(
             modifier = Modifier
@@ -72,7 +77,7 @@ fun BeamActivity(navController: NavHostController) {
                     .fillMaxWidth()
             ) {
                 Box() {
-                    config = supportDropdownMenu("cargas")
+                    load = supportDropdownMenu("cargas")
                 }
             }
 
@@ -83,10 +88,10 @@ fun BeamActivity(navController: NavHostController) {
             ) {
                 Box(modifier = Modifier
                     .offset(x = 10.dp)) {
-                    config += supportDropdownMenu("izquierda")
+                    left = supportDropdownMenu("izquierda")
                 }
                 Box(modifier = Modifier.offset(x = (-10).dp)) {
-                    config += supportDropdownMenu("derecha")
+                    right = supportDropdownMenu("derecha")
                 }
             }
         }
@@ -98,6 +103,7 @@ fun BeamActivity(navController: NavHostController) {
         ) {
             Button(
                 onClick = {
+                    config = left + right + load
                     navController.navigate("beamResult/$config")
                 },
                 modifier = Modifier.padding(24.dp)
@@ -106,15 +112,20 @@ fun BeamActivity(navController: NavHostController) {
             }
         }
     }
+
+    config += load
 }
 
 @Composable
 fun supportDropdownMenu(lado: String): String {
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionIndex by remember { mutableIntStateOf(0) }
     //val options = listOf("Cero", "Uno", "Dos", "Tres")
     var size by remember { mutableStateOf(190.dp) }
     var paddingValues = PaddingValues(start = 10.dp, top = 0.dp, end = 0.dp, bottom = 10.dp)
+
+    var result = ""
+
+    var initialIndex = 2
 
     var images = listOf(
     painterResource(id = R.drawable.support0i),
@@ -132,18 +143,23 @@ fun supportDropdownMenu(lado: String): String {
                 painterResource(id = R.drawable.support3d)
             )
             paddingValues = PaddingValues(start = 0.dp, top = 0.dp, end = 10.dp, bottom = 10.dp)
+            initialIndex = 1
         }
         "cargas" -> {
             images = listOf(
-                painterResource(id = R.drawable.loadcontinuous),
-                painterResource(id = R.drawable.support1i),
-                painterResource(id = R.drawable.support2d),
-                painterResource(id = R.drawable.support3i)
+                painterResource(id = R.drawable.f1a),
+                painterResource(id = R.drawable.qa),
+                painterResource(id = R.drawable.ql),
+                painterResource(id = R.drawable.qca)
             )
             size = 350.dp
             paddingValues = PaddingValues(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 5.dp)
+            initialIndex = 0
         }
     }
+
+
+    var selectedOptionIndex by remember { mutableIntStateOf(initialIndex) }
 
     Box {
         Button(
@@ -163,8 +179,11 @@ fun supportDropdownMenu(lado: String): String {
                     .padding(paddingValues)
             )
         }
+
         DropdownMenu(
             expanded = expanded,
+            modifier = Modifier
+                .width(size + 20.dp),
             onDismissRequest = { expanded = false }
         ) {
             images.forEachIndexed { index, _ ->
@@ -188,6 +207,7 @@ fun supportDropdownMenu(lado: String): String {
             }
         }
     }
+
     return selectedOptionIndex.toString()
 }
 
