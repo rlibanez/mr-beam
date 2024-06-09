@@ -1,5 +1,6 @@
 package com.rlibanez.mrbeam.ui.sections
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -13,11 +14,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,14 +38,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.rlibanez.mrbeam.R
 import com.rlibanez.mrbeam.model.Section
 import com.rlibanez.mrbeam.model.Units
 
@@ -51,14 +61,17 @@ fun SectionsActivity(navController: NavHostController, viewModel: SectionViewMod
     val focusRequester = remember { FocusRequester() }
     LaunchedEffect(focusRequester) { focusRequester.requestFocus() }
 
-    Surface(modifier = Modifier
-        .fillMaxSize()
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
     )
     {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(10.dp)
-            .padding(WindowInsets.statusBars.asPaddingValues()))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(10.dp)
+                .padding(WindowInsets.statusBars.asPaddingValues())
+        )
         {
             TextField(
                 value = searchText,
@@ -92,6 +105,9 @@ fun SectionsActivity(navController: NavHostController, viewModel: SectionViewMod
 
 @Composable
 fun SectionItemTable(section: Section) {
+
+    var showDialog by remember { mutableStateOf(false) }
+
     val customCardElevation = CardDefaults.cardElevation(
         defaultElevation = 8.dp,
         pressedElevation = 2.dp,
@@ -106,18 +122,54 @@ fun SectionItemTable(section: Section) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             section.name?.let {
-                Text(
-                    text = "Sección: $it",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    //color = Color(0xFF8e44ad),
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Sección: $it",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        //color = Color(0xFF8e44ad),
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    IconButton(
+                        onClick = { showDialog = true }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = "Info"
+                        )
+                    }
+                }
             }
 
             DataTable(section)
         }
+    }
+
+    val perfil = section.name.substring(0, 3)
+    val imageResource = when (perfil.lowercase()) {
+        "ipe" -> R.drawable.ipe
+        "ipn" -> R.drawable.ipn
+        "upn" -> R.drawable.upn
+        else -> R.drawable.ic_launcher_foreground
+    }
+
+    if (showDialog) {
+        AlertDialog(
+            containerColor = Color(0xFFd9d4c3),
+            onDismissRequest = { showDialog = false },
+            confirmButton = {},
+            text = {
+                Image(
+                    painter = painterResource(id = imageResource),
+                    contentDescription = "Perfil",
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        )
     }
 }
 
