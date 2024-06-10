@@ -107,8 +107,9 @@ fun BeamActivity(navController: NavHostController) {
                     navController.navigate("beamResult/$config")
                 },
                 modifier = Modifier.padding(24.dp)
+                    .fillMaxWidth()
             ) {
-                Text("Calcular")
+                Text("Calcular", fontSize = 30.sp)
             }
         }
     }
@@ -164,13 +165,11 @@ fun supportDropdownMenu(lado: String): String {
     Box {
         Button(
             onClick = { expanded = true },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent), // Configuración del color de fondo transparente
-            contentPadding = PaddingValues(0.dp), // Eliminar el relleno del contenido del botón
-            elevation = null, // Desactivar la elevación del botón
-            modifier = Modifier.wrapContentSize() // Hacer que el tamaño del botón sea el tamaño del contenido
-
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+            contentPadding = PaddingValues(0.dp),
+            elevation = null,
+            modifier = Modifier.wrapContentSize()
         ) {
-            //Text(text = selectedOption)
             Image(
                 painter = images[selectedOptionIndex],
                 contentDescription = null,
@@ -179,7 +178,6 @@ fun supportDropdownMenu(lado: String): String {
                     .padding(paddingValues)
             )
         }
-
         DropdownMenu(
             expanded = expanded,
             modifier = Modifier

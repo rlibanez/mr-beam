@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
@@ -108,6 +110,14 @@ fun SectionItemTable(section: Section) {
 
     var showDialog by remember { mutableStateOf(false) }
 
+    val perfil = section.name.substring(0, 3)
+    val imageResource = when (perfil.lowercase()) {
+        "ipe" -> R.drawable.ipe
+        "ipn" -> R.drawable.ipn
+        "upn" -> R.drawable.upn
+        else -> R.drawable.ic_launcher_foreground
+    }
+
     val customCardElevation = CardDefaults.cardElevation(
         defaultElevation = 8.dp,
         pressedElevation = 2.dp,
@@ -127,12 +137,12 @@ fun SectionItemTable(section: Section) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Sección: $it",
+                        text = "$it",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         //color = Color(0xFF8e44ad),
                         color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(vertical = 6.dp)
                     )
                     IconButton(
                         onClick = { showDialog = true }
@@ -149,13 +159,7 @@ fun SectionItemTable(section: Section) {
         }
     }
 
-    val perfil = section.name.substring(0, 3)
-    val imageResource = when (perfil.lowercase()) {
-        "ipe" -> R.drawable.ipe
-        "ipn" -> R.drawable.ipn
-        "upn" -> R.drawable.upn
-        else -> R.drawable.ic_launcher_foreground
-    }
+
 
     if (showDialog) {
         AlertDialog(
